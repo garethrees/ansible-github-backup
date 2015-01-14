@@ -1,0 +1,4 @@
+#!/bin/bash -e
+# Backup {{ username }} GitHub repositories
+
+sudo -u github-backup github-backup {{ username }} {{ backup_root }}

@@ -1,0 +1,32 @@
+---
+
+- name: Install github-backup
+  gem: name=github-backup state=latest user_install=no
+
+- name: Create github-backup group
+  group: name=github-backup state=present
+
+- name: Add a github-backup user
+  user: name=github-backup
+        comment="User to run github-backup"
+        home=/home/.github-backup
+        group=github-backup
+        shell=/bin/bash
+        generate_ssh_key=yes
+        ssh_key_comment="github-backup@{{ ansible_hostname }}"
+        state=present
+
+- name: Create github-backup backup root directory
+  file: path="{{ backup_root }}"
+        owner=root
+        group=github-backup
+        mode=2775
+        recurse=yes
+        state=directory
+
+- name: Cron job to run github-backup
+  template: src=cron-job.j2
+            dest=/etc/cron.daily/github-backup
+            owner=root
+            group=root
+            mode=0755

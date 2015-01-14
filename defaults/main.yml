@@ -1,0 +1,9 @@
+---
+
+# The GitHub account login to backup
+username: garethrees
+
+# The root directory to store the backups. Backups are namespaced per login,
+# so if `username` has access to organization repos, the organization repos will
+# get a new directory under the backup_root
+backup_root: /var/github-backup
